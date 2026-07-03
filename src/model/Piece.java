@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 public abstract class Piece {
     protected Color color;
     protected int row, col;
@@ -28,4 +30,10 @@ public abstract class Piece {
         row = r;
         col = c;
     }
+
+    // Movimentos candidatos sem verificação de xeque
+    public abstract List<Move> getCandidateMoves();
+
+    // Retorna o caminho relativo da imagem, ex: "pieces/white_king.png"
+    public abstract String getImageFileName();
 }
