@@ -5,6 +5,8 @@ public class Move {
     public int fromRow, fromCol;
     public int toRow, toCol;
     public MoveType type;
+    public Piece captured;
+    public Piece promotionPiece; // apenas para promoção
 
     public Move(Piece piece, int toRow, int toCol, MoveType type) {
         this.piece = piece;
