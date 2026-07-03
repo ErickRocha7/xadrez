@@ -33,7 +33,30 @@ public class King extends Piece {
                 }
             }
         }
+
+        // Roque
+        if (!hasMoved && !board.isKingInCheck(color)) {
+            // Roque curto (lado do rei)
+            if (canCastleKingside()) {
+                moves.add(new Move(this, row, 6, MoveType.KINGSIDE_CASTLE));
+            }
+        }
         return moves;
+    }
+
+    private boolean canCastleKingside() {
+        int r = row;
+        if (!board.isEmpty(r, 5) || !board.isEmpty(r, 6))
+            return false;
+        Piece corner = board.getPiece(r, 7);
+        if (!(corner instanceof Rook) || corner.getColor() != color)
+            return false;
+        Rook rook = (Rook) corner;
+        if (rook.hasMoved())
+            return false;
+        return !board.isSquareAttacked(r, 4, color) &&
+                !board.isSquareAttacked(r, 5, color) &&
+                !board.isSquareAttacked(r, 6, color);
     }
 
     @Override
