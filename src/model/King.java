@@ -40,6 +40,10 @@ public class King extends Piece {
             if (canCastleKingside()) {
                 moves.add(new Move(this, row, 6, MoveType.KINGSIDE_CASTLE));
             }
+            // Roque longo (lado da dama)
+            if (canCastleQueenside()) {
+                moves.add(new Move(this, row, 2, MoveType.QUEENSIDE_CASTLE));
+            }
         }
         return moves;
     }
@@ -57,6 +61,21 @@ public class King extends Piece {
         return !board.isSquareAttacked(r, 4, color) &&
                 !board.isSquareAttacked(r, 5, color) &&
                 !board.isSquareAttacked(r, 6, color);
+    }
+
+    private boolean canCastleQueenside() {
+        int r = row;
+        if (!board.isEmpty(r, 1) || !board.isEmpty(r, 2) || !board.isEmpty(r, 3))
+            return false;
+        Piece corner = board.getPiece(r, 0);
+        if (!(corner instanceof Rook) || corner.getColor() != color)
+            return false;
+        Rook rook = (Rook) corner;
+        if (rook.hasMoved())
+            return false;
+        return !board.isSquareAttacked(r, 4, color) &&
+                !board.isSquareAttacked(r, 3, color) &&
+                !board.isSquareAttacked(r, 2, color);
     }
 
     @Override
