@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Rook extends Piece {
     private boolean hasMoved = false;
 
@@ -13,6 +16,25 @@ public class Rook extends Piece {
 
     public void setMoved(boolean moved) {
         this.hasMoved = moved;
+    }
+
+    @Override
+    public List<Move> getCandidateMoves() {
+        List<Move> moves = new ArrayList<>();
+        int[][] dirs = { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
+        for (int[] d : dirs) {
+            int r = row + d[0], c = col + d[1];
+            while (r >= 0 && r < 8 && c >= 0 && c < 8) {
+                if (board.isEmpty(r, c)) {
+                    moves.add(new Move(this, r, c, MoveType.NORMAL));
+                } else {
+                    break;
+                }
+                r += d[0];
+                c += d[1];
+            }
+        }
+        return moves;
     }
 
     @Override
