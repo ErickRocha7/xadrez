@@ -11,9 +11,9 @@ public class Queen extends Piece {
     @Override
     public List<Move> getCandidateMoves() {
         List<Move> moves = new ArrayList<>();
-        // Direções ortogonais (como uma Torre)
         int[][] dirs = {
-                { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 }
+                { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 },
+                { 1, 1 }, { 1, -1 }, { -1, 1 }, { -1, -1 }
         };
         for (int[] d : dirs) {
             int r = row + d[0], c = col + d[1];
