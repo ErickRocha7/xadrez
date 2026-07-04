@@ -28,6 +28,9 @@ public class Rook extends Piece {
                 if (board.isEmpty(r, c)) {
                     moves.add(new Move(this, r, c, MoveType.NORMAL));
                 } else {
+                    if (board.isOpponentPiece(r, c, color)) {
+                        moves.add(new Move(this, r, c, MoveType.CAPTURE));
+                    }
                     break;
                 }
                 r += d[0];
