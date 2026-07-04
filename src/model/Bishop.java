@@ -11,8 +11,7 @@ public class Bishop extends Piece {
     @Override
     public List<Move> getCandidateMoves() {
         List<Move> moves = new ArrayList<>();
-        // Primeiras duas diagonais
-        int[][] dirs = { { 1, 1 }, { 1, -1 } };
+        int[][] dirs = { { 1, 1 }, { 1, -1 }, { -1, 1 }, { -1, -1 } };
         for (int[] d : dirs) {
             int r = row + d[0], c = col + d[1];
             while (r >= 0 && r < 8 && c >= 0 && c < 8) {
