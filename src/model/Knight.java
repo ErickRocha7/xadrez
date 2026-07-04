@@ -15,6 +15,14 @@ public class Knight extends Piece {
                 { 2, 1 }, { 2, -1 }, { -2, 1 }, { -2, -1 },
                 { 1, 2 }, { 1, -2 }, { -1, 2 }, { -1, -2 }
         };
+        for (int[] j : jumps) {
+            int r = row + j[0], c = col + j[1];
+            if (r >= 0 && r < 8 && c >= 0 && c < 8) {
+                if (board.isEmpty(r, c)) {
+                    moves.add(new Move(this, r, c, MoveType.NORMAL));
+                }
+            }
+        }
         return moves;
     }
 
