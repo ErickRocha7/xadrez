@@ -47,6 +47,17 @@ public class Pawn extends Piece {
             }
         }
 
+        // En passant
+        Move lastMove = board.getLastMove();
+        if (lastMove != null && lastMove.piece instanceof Pawn &&
+                Math.abs(lastMove.toRow - lastMove.fromRow) == 2 &&
+                lastMove.piece.getColor() != color &&
+                lastMove.toRow == row &&
+                Math.abs(lastMove.toCol - col) == 1) {
+            int epRow = row + direction;
+            moves.add(new Move(this, epRow, lastMove.toCol, MoveType.EN_PASSANT));
+        }
+
         return moves;
     }
 
