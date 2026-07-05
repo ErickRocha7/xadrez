@@ -153,4 +153,40 @@ public class Board {
         }
         return false;
     }
+
+    // Validação de xeque e movimentos legais
+    public boolean isKingInCheck(Color color) {
+        int kingRow = -1, kingCol = -1;
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                Piece p = squares[r][c];
+                if (p instanceof King && p.getColor() == color) {
+                    kingRow = r;
+                    kingCol = c;
+                    break;
+                }
+            }
+        }
+        if (kingRow == -1)
+            return false;
+        return isSquareAttacked(kingRow, kingCol, color);
+    }
+
+    public boolean isMoveLegal(Move move) {
+        Piece piece = move.piece;
+        int origRow = piece.getRow(), origCol = piece.getCol();
+        Piece captured = getPiece(move.toRow, move.toCol);
+
+        squares[origRow][origCol] = null;
+        squares[move.toRow][move.toCol] = piece;
+        piece.setPosition(move.toRow, move.toCol);
+
+        boolean kingInCheck = isKingInCheck(piece.getColor());
+
+        squares[origRow][origCol] = piece;
+        squares[move.toRow][move.toCol] = captured;
+        piece.setPosition(origRow, origCol);
+
+        return !kingInCheck;
+    }
 }
