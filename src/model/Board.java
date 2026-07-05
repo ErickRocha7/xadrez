@@ -59,4 +59,19 @@ public class Board {
         Piece p = getPiece(row, col);
         return p != null && p.getColor() != myColor;
     }
+
+    // Controle de turnos e histórico de lances
+    public Color getTurn() {
+        return turn;
+    }
+
+    public void switchTurn() {
+        turn = (turn == Color.WHITE) ? Color.BLACK : Color.WHITE;
+    }
+
+    public Move getLastMove() {
+        if (moveHistory.isEmpty())
+            return null;
+        return moveHistory.get(moveHistory.size() - 1);
+    }
 }
