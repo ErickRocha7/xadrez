@@ -42,7 +42,8 @@ public class Board {
 
     // Métodos utilitários de leitura e escrita
     public Piece getPiece(int row, int col) {
-        if (row < 0 || row >= 8 || col < 0 || col >= 8) return null;
+        if (row < 0 || row >= 8 || col < 0 || col >= 8)
+            return null;
         return squares[row][col];
     }
 
@@ -69,7 +70,8 @@ public class Board {
     }
 
     public Move getLastMove() {
-        if (moveHistory.isEmpty()) return null;
+        if (moveHistory.isEmpty())
+            return null;
         return moveHistory.get(moveHistory.size() - 1);
     }
 
@@ -103,6 +105,17 @@ public class Board {
                 rookQ.setPosition(toRow, 3);
                 rookQ.setMoved(true);
                 ((King) piece).setMoved(true);
+                break;
+            case EN_PASSANT:
+                squares[toRow][toCol] = piece;
+                piece.setPosition(toRow, toCol);
+                int capturedRow = (piece.getColor() == Color.WHITE) ? toRow + 1 : toRow - 1;
+                move.captured = squares[capturedRow][toCol];
+                squares[capturedRow][toCol] = null;
+                break;
+            case PROMOTION:
+                Piece promo = new Queen(piece.getColor(), toRow, toCol, this);
+                squares[toRow][toCol] = promo;
                 break;
             default: // NORMAL, CAPTURE
                 squares[toRow][toCol] = piece;
