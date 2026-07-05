@@ -13,6 +13,7 @@ public class Board {
     }
 
     private void setupPieces() {
+        // Peças pretas
         squares[0][0] = new Rook(Color.BLACK, 0, 0, this);
         squares[0][1] = new Knight(Color.BLACK, 0, 1, this);
         squares[0][2] = new Bishop(Color.BLACK, 0, 2, this);
@@ -24,6 +25,8 @@ public class Board {
         for (int c = 0; c < 8; c++) {
             squares[1][c] = new Pawn(Color.BLACK, 1, c, this);
         }
+
+        // Peças brancas
         for (int c = 0; c < 8; c++) {
             squares[6][c] = new Pawn(Color.WHITE, 6, c, this);
         }
@@ -35,5 +38,25 @@ public class Board {
         squares[7][5] = new Bishop(Color.WHITE, 7, 5, this);
         squares[7][6] = new Knight(Color.WHITE, 7, 6, this);
         squares[7][7] = new Rook(Color.WHITE, 7, 7, this);
+    }
+
+    // Métodos utilitários de leitura e escrita
+    public Piece getPiece(int row, int col) {
+        if (row < 0 || row >= 8 || col < 0 || col >= 8)
+            return null;
+        return squares[row][col];
+    }
+
+    public void setPiece(int row, int col, Piece piece) {
+        squares[row][col] = piece;
+    }
+
+    public boolean isEmpty(int row, int col) {
+        return row >= 0 && row < 8 && col >= 0 && col < 8 && squares[row][col] == null;
+    }
+
+    public boolean isOpponentPiece(int row, int col, Color myColor) {
+        Piece p = getPiece(row, col);
+        return p != null && p.getColor() != myColor;
     }
 }
