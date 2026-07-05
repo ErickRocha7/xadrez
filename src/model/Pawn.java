@@ -13,10 +13,15 @@ public class Pawn extends Piece {
         List<Move> moves = new ArrayList<>();
         int direction = (color == Color.WHITE) ? -1 : 1;
         int startRow = (color == Color.WHITE) ? 6 : 1;
+        int promoRow = (color == Color.WHITE) ? 0 : 7;
 
         int oneStep = row + direction;
         if (oneStep >= 0 && oneStep < 8 && board.isEmpty(oneStep, col)) {
-            moves.add(new Move(this, oneStep, col, MoveType.NORMAL));
+            if (oneStep == promoRow) {
+                moves.add(new Move(this, oneStep, col, MoveType.PROMOTION));
+            } else {
+                moves.add(new Move(this, oneStep, col, MoveType.NORMAL));
+            }
 
             if (row == startRow) {
                 int twoStep = row + 2 * direction;
@@ -32,7 +37,11 @@ public class Pawn extends Piece {
                 int newRow = row + direction;
                 if (newRow >= 0 && newRow < 8) {
                     if (board.isOpponentPiece(newRow, newCol, color)) {
-                        moves.add(new Move(this, newRow, newCol, MoveType.CAPTURE));
+                        if (newRow == promoRow) {
+                            moves.add(new Move(this, newRow, newCol, MoveType.PROMOTION));
+                        } else {
+                            moves.add(new Move(this, newRow, newCol, MoveType.CAPTURE));
+                        }
                     }
                 }
             }
