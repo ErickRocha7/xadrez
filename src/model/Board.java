@@ -74,4 +74,33 @@ public class Board {
             return null;
         return moveHistory.get(moveHistory.size() - 1);
     }
+
+    // Lógica base de execução de jogadas
+    public void executeMove(Move move) {
+        Piece piece = move.piece;
+        int fromRow = piece.getRow(), fromCol = piece.getCol();
+        int toRow = move.toRow, toCol = move.toCol;
+
+        squares[fromRow][fromCol] = null;
+        Piece captured = getPiece(toRow, toCol);
+        move.captured = captured;
+
+        switch (move.type) {
+            default: // NORMAL, CAPTURE
+                squares[toRow][toCol] = piece;
+                piece.setPosition(toRow, toCol);
+                break;
+        }
+
+        if (piece instanceof King) {
+            ((King) piece).setMoved(true);
+        } else if (piece instanceof Rook) {
+            ((Rook) piece).setMoved(true);
+        }
+
+        moveHistory.add(move);
+    }
+
+    public void undoMove(Move move) {
+    }
 }
