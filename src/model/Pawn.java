@@ -11,6 +11,13 @@ public class Pawn extends Piece {
     @Override
     public List<Move> getCandidateMoves() {
         List<Move> moves = new ArrayList<>();
+        int direction = (color == Color.WHITE) ? -1 : 1;
+
+        int oneStep = row + direction;
+        if (oneStep >= 0 && oneStep < 8 && board.isEmpty(oneStep, col)) {
+            moves.add(new Move(this, oneStep, col, MoveType.NORMAL));
+        }
+
         return moves;
     }
 
