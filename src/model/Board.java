@@ -42,8 +42,7 @@ public class Board {
 
     // Métodos utilitários de leitura e escrita
     public Piece getPiece(int row, int col) {
-        if (row < 0 || row >= 8 || col < 0 || col >= 8)
-            return null;
+        if (row < 0 || row >= 8 || col < 0 || col >= 8) return null;
         return squares[row][col];
     }
 
@@ -70,8 +69,7 @@ public class Board {
     }
 
     public Move getLastMove() {
-        if (moveHistory.isEmpty())
-            return null;
+        if (moveHistory.isEmpty()) return null;
         return moveHistory.get(moveHistory.size() - 1);
     }
 
@@ -167,8 +165,7 @@ public class Board {
                 }
             }
         }
-        if (kingRow == -1)
-            return false;
+        if (kingRow == -1) return false;
         return isSquareAttacked(kingRow, kingCol, color);
     }
 
@@ -190,7 +187,7 @@ public class Board {
         return !kingInCheck;
     }
 
-    // Filtragem de lances legais (Código Final)
+    // Filtragem de lances legais
     public List<Move> getAllLegalMoves(Color color) {
         List<Move> legalMoves = new ArrayList<>();
         for (int r = 0; r < 8; r++) {
@@ -206,5 +203,16 @@ public class Board {
             }
         }
         return legalMoves;
+    }
+
+    // Verificação de fim de jogo
+    public boolean isCheckmate(Color color) {
+        if (!isKingInCheck(color)) return false;
+        return getAllLegalMoves(color).isEmpty();
+    }
+
+    public boolean isStalemate(Color color) {
+        if (isKingInCheck(color)) return false;
+        return getAllLegalMoves(color).isEmpty();
     }
 }
