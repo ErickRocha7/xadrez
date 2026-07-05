@@ -26,6 +26,18 @@ public class Pawn extends Piece {
             }
         }
 
+        for (int dc : new int[] { -1, 1 }) {
+            int newCol = col + dc;
+            if (newCol >= 0 && newCol < 8) {
+                int newRow = row + direction;
+                if (newRow >= 0 && newRow < 8) {
+                    if (board.isOpponentPiece(newRow, newCol, color)) {
+                        moves.add(new Move(this, newRow, newCol, MoveType.CAPTURE));
+                    }
+                }
+            }
+        }
+
         return moves;
     }
 
