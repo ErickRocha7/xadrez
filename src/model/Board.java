@@ -134,4 +134,23 @@ public class Board {
 
     public void undoMove(Move move) {
     }
+
+    // Detecção de casas atacadas (Ameaças)
+    public boolean isSquareAttacked(int row, int col, Color defenderColor) {
+        Color attackerColor = (defenderColor == Color.WHITE) ? Color.BLACK : Color.WHITE;
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                Piece p = squares[r][c];
+                if (p != null && p.getColor() == attackerColor) {
+                    List<Move> moves = p.getCandidateMoves();
+                    for (Move m : moves) {
+                        if (m.toRow == row && m.toCol == col) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }
