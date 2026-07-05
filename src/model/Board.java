@@ -189,4 +189,22 @@ public class Board {
 
         return !kingInCheck;
     }
+
+    // Filtragem de lances legais (Código Final)
+    public List<Move> getAllLegalMoves(Color color) {
+        List<Move> legalMoves = new ArrayList<>();
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                Piece p = squares[r][c];
+                if (p != null && p.getColor() == color) {
+                    for (Move m : p.getCandidateMoves()) {
+                        if (isMoveLegal(m)) {
+                            legalMoves.add(m);
+                        }
+                    }
+                }
+            }
+        }
+        return legalMoves;
+    }
 }
